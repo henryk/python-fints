@@ -28,18 +28,6 @@ def fints_escape(content):
     return content.replace('?', '??').replace('+', '?+').replace(':', '?:').replace("'", "?'")
 
 
-def fints_unescape(content):
-    return content.replace('??', '?').replace("?'", "'").replace('?+', '+').replace('?:', ':')
-
-
-def split_for_data_groups(seg):
-    return re.split('\+(?<!\?\+)', seg)
-
-
-def split_for_data_elements(deg):
-    return re.split(':(?<!\?:)', deg)
-
-
 class MT535_Miniparser:
     re_identification = re.compile(r"^:35B:ISIN\s(.*)\|(.*)\|(.*)$")
     re_marketprice = re.compile(r"^:90B::MRKT\/\/ACTU\/([A-Z]{3})(\d*),{1}(\d*)$")
