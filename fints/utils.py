@@ -28,6 +28,23 @@ def fints_escape(content):
     return content.replace('?', '??').replace('+', '?+').replace(':', '?:').replace("'", "?'")
 
 
+def classproperty(f):
+    class fx:
+        def __init__(self, getter):
+            self.getter = getter
+        def __get__(self, obj, type=None):
+            return self.getter(type)
+    return fx(f)
+
+
+class SubclassesMixin:
+    @classmethod
+    def _all_subclasses(cls):
+        for subcls in cls.__subclasses__():
+            yield from subcls._all_subclasses()
+        yield cls
+
+
 class MT535_Miniparser:
     re_identification = re.compile(r"^:35B:ISIN\s(.*)\|(.*)\|(.*)$")
     re_marketprice = re.compile(r"^:90B::MRKT\/\/ACTU\/([A-Z]{3})(\d*),{1}(\d*)$")
